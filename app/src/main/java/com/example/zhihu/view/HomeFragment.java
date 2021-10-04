@@ -1,0 +1,108 @@
+package com.example.zhihu.view;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
+import com.bumptech.glide.Glide;
+import com.example.zhihu.R;
+import com.example.zhihu.adapter.HomeItemAdapter;
+import com.example.zhihu.bean.Question;
+import com.example.zhihu.bean.User;
+import com.example.zhihu.databinding.HomeFragmentBinding;
+import com.example.zhihu.helper.MyDataBaseHelper;
+import com.example.zhihu.model.QuestionModel;
+import com.example.zhihu.model.UserModel;
+import com.example.zhihu.viewModel.ProfileShareData;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import pl.com.salsoft.sqlitestudioremote.SQLiteStudioService;
+
+public class HomeFragment extends Fragment {
+    private HomeFragmentBinding binding;
+    private MyDataBaseHelper helper;
+    private HomeItemAdapter adapter;
+    private List<Question> questions;
+    private QuestionModel questionModel;
+    private UserModel userModel;
+    private ProfileShareData shareData;
+    private User mUser;
+    private HomeFragment fragment;
+
+    public HomeFragment(MyDataBaseHelper helper){
+        this.helper = helper;
+        questionModel = new QuestionModel(helper);
+        initQuestions();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        userModel = new UserModel(helper);
+        fragment = this;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.home_fragment, container, false);
+        init();
+        return binding.getRoot();
+    }
+
+    private void init(){
+        shareData = new ViewModelProvider(requireActivity()).get(ProfileShareData.class);
+        SQLiteStudioService.instance().start(getContext());
+        adapter = new HomeItemAdapter(getContext(), questions, helper, fragment, mUser);
+        binding.questionRecycler.setAdapter(adapter);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        binding.questionRecycler.setLayoutManager(manager);
+        if (mUser == null){
+            binding.addQuestionBtn.setEnabled(false);
+        }
+        binding.addQuestionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.home_main_fragment, new AddQuestionFragment(helper, mUser))
+                        .commit();
+            }
+        });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        adapter.notifyDataSetChanged();
+        shareData.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
+                mUser = user;
+                adapter = new HomeItemAdapter(getContext(), questions, helper, fragment, user);
+                binding.questionRecycler.setAdapter(adapter);
+                binding.addQuestionBtn.setEnabled(true);
+                if (user.getImageUrl() != null){
+                    Glide.with(binding.homeHeadImage.getContext()).load(new File(user.getImageUrl())).into(binding.homeHeadImage);
+                }
+            }
+        });
+    }
+
+    private void initQuestions(){
+        questions = questionModel.getAllQuestion();
+    }
+}

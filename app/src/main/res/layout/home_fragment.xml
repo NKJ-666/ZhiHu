@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/home_head_image"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:src="@drawable/test_backgroud"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/search_view"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="5"
+                android:background="@drawable/search_backgroud"
+                app:queryHint="请输入搜索内容"/>
+
+            <ImageView
+                android:id="@+id/add_question_btn"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:src="@drawable/add_question"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/question_recycler"
+            android:layout_marginStart="10sp"
+            android:layout_marginEnd="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</layout>

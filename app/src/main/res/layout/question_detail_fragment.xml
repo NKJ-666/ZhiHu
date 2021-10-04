@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/first_relative"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="10sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/detail_back_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/detail_back_btn"/>
+
+            <ImageView
+                android:id="@+id/write_answer_image"
+                android:layout_marginEnd="10sp"
+                android:layout_toStartOf="@id/write_answer_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/write_answer_image"/>
+
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10sp"
+                android:id="@+id/write_answer_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:text="写回答"
+                android:textColor="#1E88E5"/>
+
+        </RelativeLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:layout_below="@+id/first_relative"
+            android:id="@+id/question_answer_detail_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+</layout>

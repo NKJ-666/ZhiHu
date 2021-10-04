@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="首页"
+        android:id="@+id/home"
+        android:icon="@drawable/bottom_select_home"/>
+
+    <item android:title="我的"
+        android:id="@+id/profile"
+        android:icon="@drawable/bottom_select_profile"/>
+
+</menu>

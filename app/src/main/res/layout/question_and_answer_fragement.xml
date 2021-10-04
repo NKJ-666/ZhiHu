@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="Question"
+            type="com.example.zhihu.bean.Question" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:background="#ffffff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Question.questionText}"/>
+
+                    <LinearLayout
+                        android:id="@+id/add_image_linear"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                        android:id="@+id/add_video_linear"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+
+                </LinearLayout>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/question_and_answer_recycler"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

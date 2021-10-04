@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="Question"
+            type="com.example.zhihu.bean.Question" />
+        <variable
+            name="User"
+            type="com.example.zhihu.bean.User" />
+        <variable
+            name="Answer"
+            type="com.example.zhihu.bean.Answer" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/total_layout"
+        android:layout_marginTop="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:elevation="5dp"
+            app:cardCornerRadius="10sp"
+            app:cardBackgroundColor="#8DFFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:text="@{Question.questionText}"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        bind:imageUrl="@{User.imageUrl}"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textStyle="bold"/>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#08FFFFFF"
+                    android:maxLines="2"
+                    android:ellipsize="end"/>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="@{String.valueOf(Answer.praisedCount)}"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="10sp"
+                        android:textSize="16sp"
+                        android:text="赞同"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="20dp"
+                        android:text="@{String.valueOf(Answer.commentCount)}"
+                        android:textSize="16sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="10sp"
+                        android:textSize="16sp"
+                        android:text="评论"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</layout>

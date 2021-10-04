@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="Question"
+            type="com.example.zhihu.bean.Question" />
+        <variable
+            name="AnswerUser"
+            type="com.example.zhihu.bean.User" />
+        <variable
+            name="Answer"
+            type="com.example.zhihu.bean.Answer" />
+        <variable
+            name="Comment"
+            type="com.example.zhihu.bean.Comment" />
+        <variable
+            name="OwnUser"
+            type="com.example.zhihu.bean.User" />
+    </data>
+
+    <RelativeLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginStart="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/comment_user_info"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@{AnswerUser.imageUrl}"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="@{AnswerUser.username}"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/follow_text_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+关注"
+            android:textColor="#3F51B5"
+            android:textSize="16sp"
+            android:layout_alignParentEnd="true"/>
+        
+        <LinearLayout
+            android:layout_below="@id/follow_text_btn"
+            android:id="@+id/answer_detail_linear"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{Answer.answerText}"/>
+
+            <LinearLayout
+                android:id="@+id/add_image_linear"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/add_video_linear"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/answer_detail_linear"
+            android:id="@+id/comment_edit_relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/comment_circle_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                bind:imageUrl="@{OwnUser.imageUrl}"/>
+
+            <EditText
+                android:layout_centerVertical="true"
+                android:background="@drawable/comment_edittext"
+                android:id="@+id/comment_edit_text"
+                android:layout_toStartOf="@+id/send_comment_btn"
+                android:layout_marginStart="10sp"
+                android:hint="说点啥.."
+                android:layout_toEndOf="@id/comment_circle_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:layout_centerVertical="true"
+                android:id="@+id/send_comment_btn"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送"
+                android:background="@drawable/login_btn_backgroud"/>
+
+        </RelativeLayout>
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@id/comment_edit_relative"
+            android:id="@+id/question_comment_detail_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <RelativeLayout
+            android:layout_below="@+id/question_comment_detail_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/approve_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#0384F4"
+                android:background="@drawable/approve_btn_shape"
+                android:text="赞同"/>
+
+            <RelativeLayout
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/comment_relative"
+                android:layout_marginEnd="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/collect_answer"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/collecte_unselected"/>
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/collect_answer"
+                    android:id="@+id/collect_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(Answer.praisedCount)}"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_centerVertical="true"
+                android:id="@+id/comment_relative"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/comment_answer"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/comment_answer"/>
+
+                <TextView
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/comment_answer"
+                    android:id="@+id/comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(Answer.commentCount)}"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

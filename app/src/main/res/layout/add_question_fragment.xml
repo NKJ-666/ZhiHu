@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/add_top_relative"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/close_add_fragment"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10sp"
+                android:src="@drawable/close_add_fragment"/>
+
+            <TextView
+                android:id="@+id/send_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10sp"
+                android:text="发布问题"
+                android:textColor="#039BE5"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+
+        <EditText
+            android:layout_marginStart="10sp"
+            android:id="@+id/question_text_edit"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/add_top_relative"
+            android:hint="输入问题并以问号结尾"
+            android:maxLines="3"
+            android:gravity="top"
+            android:background="@null"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"/>
+
+        <Button
+            android:id="@+id/add_image_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加图片"
+            android:background="@drawable/login_btn_backgroud"
+            android:layout_below="@id/question_text_edit"
+            android:layout_toStartOf="@id/add_video_btn"/>
+
+        <Button
+            android:id="@+id/add_video_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加视频"
+            android:background="@drawable/login_btn_backgroud"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/question_text_edit"/>
+
+        <ScrollView
+            android:id="@+id/add_question_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/add_image_btn"
+            android:layout_marginStart="10sp">
+
+            <LinearLayout
+                android:id="@+id/add_question_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/add_image_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <LinearLayout
+                    android:id="@+id/add_video_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+                <EditText
+                    android:id="@+id/question_detail_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="对问题补充说明(选填)" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </RelativeLayout>
+</layout>

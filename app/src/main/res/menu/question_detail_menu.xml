@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/write_answer_image"
+        android:title="write_answer"
+        android:icon="@drawable/write_answer_image"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/write_answer_btn"
+        android:title="写回答"
+        app:showAsAction="ifRoom"/>
+</menu>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <RelativeLayout
+        android:background="@drawable/login_dialog_shape"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:id="@+id/account_linear3"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="账号:"/>
+
+            <EditText
+                android:id="@+id/account_edit"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:hint="请输入8到11位的账号"
+                android:maxLength="11"
+                android:layout_marginStart="10sp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/account_linear4"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_below="@+id/account_linear3"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:text="密码:"/>
+
+            <EditText
+                android:id="@+id/password_edit"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:hint="请输入您的密码"
+                android:maxLength="11"
+                android:layout_marginStart="10sp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/register_btn"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/account_linear4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="注册"
+            android:background="@drawable/login_btn_backgroud"/>
+
+    </RelativeLayout>
+
+</layout>

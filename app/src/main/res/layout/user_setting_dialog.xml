@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:background="@drawable/login_dialog_shape"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginTop="20dp"
+            android:id="@+id/dialog_head_image"
+            android:layout_centerHorizontal="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"/>
+
+        <LinearLayout
+            android:layout_marginStart="10sp"
+            android:id="@+id/linear1"
+            android:layout_below="@id/dialog_head_image"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户名:"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/setting_username"
+                android:layout_marginStart="10sp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginStart="10sp"
+            android:id="@+id/linear2"
+            android:layout_below="@id/linear1"
+            android:layout_marginTop="15dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:text="性别:"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
+
+            <Spinner
+                android:id="@+id/sex_spinner"
+                android:layout_marginStart="12dp"
+                android:textSize="24sp"
+                android:entries="@array/sex"
+                android:dropDownWidth="200dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/linear2"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:id="@+id/cancel_btn"
+                android:background="@drawable/login_btn_backgroud"
+                android:textSize="16dp"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="取消"/>
+
+            <Button
+                android:id="@+id/save_btn"
+                android:textSize="16dp"
+                android:background="@drawable/login_btn_backgroud"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:text="保存"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</layout>

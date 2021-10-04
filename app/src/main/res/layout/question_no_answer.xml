@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="Question"
+            type="com.example.zhihu.bean.Question" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/total_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            android:elevation="5dp"
+            app:cardCornerRadius="10sp"
+            app:cardBackgroundColor="#8DFFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="@{Question.questionText}"
+                android:textStyle="bold"/>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</layout>
