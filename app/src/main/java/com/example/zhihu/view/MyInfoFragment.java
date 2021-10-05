@@ -21,6 +21,7 @@ import com.example.zhihu.bean.User;
 import com.example.zhihu.databinding.MyInfoFragmentBinding;
 import com.example.zhihu.helper.MyDataBaseHelper;
 import com.example.zhihu.util.GetRealUriUtil;
+import com.example.zhihu.viewModel.InfoShareData;
 import com.example.zhihu.viewModel.ProfileShareData;
 
 import java.io.File;
@@ -31,6 +32,7 @@ public class MyInfoFragment extends Fragment {
     private ProfileShareData shareData;
     private User user;
     private Fragment fragment;
+    private InfoShareData infoShareData;
     private static final int UPDATE_INFO = 1;
 
     public MyInfoFragment(MyDataBaseHelper helper, User user){
@@ -50,20 +52,44 @@ public class MyInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         shareData = new ViewModelProvider(requireActivity()).get(ProfileShareData.class);
+        infoShareData = new ViewModelProvider(requireActivity()).get(InfoShareData.class);
         shareData.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
+                if (user != null){
+                    binding.setUser(user);
+                    if (user.getImageUrl() == null){
+                        Glide.with(binding.myCircleImage.getContext()).load(R.drawable.test_backgroud).into(binding.myCircleImage);
+                    } else {
+                        Glide.with(binding.myCircleImage.getContext()).load(new File(user.getImageUrl())).into(binding.myCircleImage);
+                    }
+                    if (user.getSex() == 0){
+                        binding.sexImage.setImageResource(R.drawable.male);
+                    }else {
+                        binding.sexImage.setImageResource(R.drawable.female);
+                    }
+                }
+            }
+        });
+        infoShareData.getFollowingCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                user.setFollowingCount(integer);
                 binding.setUser(user);
-                if (user.getImageUrl() == null){
-                    Glide.with(binding.myCircleImage.getContext()).load(R.drawable.test_backgroud).into(binding.myCircleImage);
-                } else {
-                    Glide.with(binding.myCircleImage.getContext()).load(new File(user.getImageUrl())).into(binding.myCircleImage);
-                }
-                if (user.getSex() == 0){
-                    binding.sexImage.setImageResource(R.drawable.male);
-                }else {
-                    binding.sexImage.setImageResource(R.drawable.female);
-                }
+            }
+        });
+        infoShareData.getApproveCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                user.setPraisedCount(integer);
+                binding.setUser(user);
+            }
+        });
+        infoShareData.getFollowerCount().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                user.setFollowerCount(integer);
+                binding.setUser(user);
             }
         });
     }
@@ -83,8 +109,7 @@ public class MyInfoFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == UPDATE_INFO){
             if (resultCode == Activity.RESULT_OK){
-                if (user.getImageUrl() != data.getStringExtra("imageUrl"))
-                    Glide.with(binding.myCircleImage.getContext()).load(new File(data.getStringExtra("imageUrl"))).into(binding.myCircleImage);
+                Glide.with(binding.myCircleImage.getContext()).load(new File(data.getStringExtra("imageUrl"))).into(binding.myCircleImage);
                 user.setUsername(data.getStringExtra("username"));
                 binding.setUser(user);
                 if (data.getIntExtra("sex", 3) == 0){

@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,9 +22,11 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.bumptech.glide.Glide;
 import com.example.zhihu.R;
+import com.example.zhihu.adapter.FragmentAdapter;
 import com.example.zhihu.bean.User;
 import com.example.zhihu.databinding.ProfileFragmentBinding;
 import com.example.zhihu.helper.MyDataBaseHelper;
@@ -31,10 +34,14 @@ import com.example.zhihu.util.GetRealUriUtil;
 import com.example.zhihu.viewModel.LoginDialogViewModel;
 import com.example.zhihu.viewModel.ProfileShareData;
 import com.example.zhihu.viewModel.ProfileViewModel;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.security.Permission;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
     private ProfileFragmentBinding binding;
@@ -44,6 +51,9 @@ public class ProfileFragment extends Fragment {
     private ProfileViewModel viewModel;
     private static final int REQUEST_CAMERA = 1;
     private static final int GET_BACK_IMAGE = 2;
+    private TabLayoutMediator mediator;
+    private final String[] tabs = new String[]{"我发布的", "我关注的", "我收藏的", "我赞过的"};
+    private List<Fragment> fragments;
 
     public ProfileFragment(MyDataBaseHelper helper){
         this.helper = helper;
@@ -53,25 +63,40 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.profile_fragment, container, false);
+        initList();
         init();
         return binding.getRoot();
     }
 
     private void init(){
-        viewModel = new ProfileViewModel(helper);
+        viewModel = new ProfileViewModel(helper, getContext());
         getParentFragmentManager().beginTransaction()
                 .replace(R.id.profile_fragment, new LoginFragment(helper), null)
                 .commit();
-        binding.backgroudImage.setOnClickListener(new View.OnClickListener() {
+        shareData = new ViewModelProvider(requireActivity()).get(ProfileShareData.class);
+        binding.backgroudImage.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 if (mUser != null){
                     chooseFromAlbum();
+                    return true;
                 }
+                return false;
             }
         });
         Glide.with(binding.backgroudImage.getContext()).load(R.drawable.test_backgroud).into(binding.backgroudImage);
-        shareData = new ViewModelProvider(requireActivity()).get(ProfileShareData.class);
+        FragmentAdapter adapter = new FragmentAdapter(requireActivity(), fragments);
+        binding.myPostViewPaper.setAdapter(adapter);
+        binding.myPostViewPaper.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
+        mediator = new TabLayoutMediator(binding.profileTab, binding.myPostViewPaper, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                TextView tabView = new TextView(getContext());
+                tabView.setText(tabs[position]);
+                tab.setCustomView(tabView);
+            }
+        });
+        mediator.attach();
     }
 
     @Override
@@ -81,13 +106,26 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onChanged(User user) {
                 mUser = user;
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.profile_fragment, new MyInfoFragment(helper, user), null)
-                        .commit();
-                if (user.getBackgroundUrl() == null){
-                    Glide.with(binding.backgroudImage.getContext()).load(R.drawable.test_backgroud).into(binding.backgroudImage);
+                if (user != null){
+                    initList(user);
+                    viewModel.initUnLogin(binding, shareData, mUser);
+                    FragmentAdapter adapter = new FragmentAdapter(requireActivity(), fragments);
+                    binding.myPostViewPaper.setAdapter(adapter);
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.profile_fragment, new MyInfoFragment(helper, user), null)
+                            .commit();
+                    if (user.getBackgroundUrl() == null){
+                        Glide.with(binding.backgroudImage.getContext()).load(R.drawable.test_backgroud).into(binding.backgroudImage);
+                    }else {
+                        Glide.with(binding.backgroudImage.getContext()).load(new File(user.getBackgroundUrl())).into(binding.backgroudImage);
+                    }
                 }else {
-                    Glide.with(binding.backgroudImage.getContext()).load(new File(user.getBackgroundUrl())).into(binding.backgroudImage);
+                    initList(null);
+                    FragmentAdapter adapter = new FragmentAdapter(requireActivity(), fragments);
+                    binding.myPostViewPaper.setAdapter(adapter);
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.profile_fragment, new LoginFragment(helper), null)
+                            .commit();
                 }
             }
         });
@@ -116,5 +154,21 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent(Intent.ACTION_PICK, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
         startActivityForResult(intent, GET_BACK_IMAGE);
+    }
+
+    private void initList(){
+        fragments = new ArrayList<>();
+        fragments.add(new MyListFragment(helper, mUser));
+        fragments.add(new MyFollowingAnswer(helper, mUser));
+        fragments.add(new MyCollectAnswerFrag(helper, mUser));
+        fragments.add(new MyApproveAnswerFrag(helper, mUser));
+    }
+
+    private void initList(User mUser){
+        fragments.clear();
+        fragments.add(new MyListFragment(helper, mUser));
+        fragments.add(new MyFollowingAnswer(helper, mUser));
+        fragments.add(new MyCollectAnswerFrag(helper, mUser));
+        fragments.add(new MyApproveAnswerFrag(helper, mUser));
     }
 }

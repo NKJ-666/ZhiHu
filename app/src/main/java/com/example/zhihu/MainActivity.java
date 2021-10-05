@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        helper = new MyDataBaseHelper(this, "zhihu.db", null, 7);
+        helper = new MyDataBaseHelper(this, "zhihu.db", null, 10);
         helper.getWritableDatabase();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.home_main_fragment, new NavigationFragment(helper))

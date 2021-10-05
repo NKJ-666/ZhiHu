@@ -14,8 +14,22 @@
             <ImageView
                 android:id="@+id/backgroud_image"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="120dp"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
                 android:scaleType="centerCrop"/>
+
+            <ImageView
+                android:id="@+id/un_login_btn"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10sp"
+                android:layout_marginEnd="20sp"
+                android:drawableTop="@drawable/unlogin"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:src="@drawable/unlogin"/>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/profile_fragment"
@@ -36,11 +50,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="4pt"
                 app:tabGravity="center"
-                app:tabIndicatorColor="#FF6E40"
+                app:tabIndicatorColor="#0091EA"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorHeight="2dp"
                 app:tabMode="scrollable"
-                app:tabSelectedTextColor="#FF6E40"
+                app:tabSelectedTextColor="#0091EA"
                 app:tabTextColor="#5E000000"
                 app:tabUnboundedRipple="true"/>
 

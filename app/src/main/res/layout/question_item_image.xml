@@ -62,17 +62,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textSize="16sp"
-                                android:text="@{Answer.answerText}"
+                                android:text="@{User.username}"
                                 android:textStyle="bold"/>
 
                         </LinearLayout>
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="#08FFFFFF"
-                            android:lines="2"
+                            android:textColor="#D7000000"
+                            android:text="@{Answer.answerText}"
                             android:maxLines="2"
+                            android:lines="2"
                             android:ellipsize="end"/>
 
                     </LinearLayout>

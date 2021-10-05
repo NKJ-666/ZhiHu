@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.example.zhihu.bean.Answer;
 import com.example.zhihu.bean.Question;
+import com.example.zhihu.bean.User;
 import com.example.zhihu.helper.MyDataBaseHelper;
 import com.example.zhihu.util.DataTransformUtil;
 
@@ -105,11 +106,91 @@ public class AnswerModel {
         database.close();
     }
 
-    public void updateCommentCount(@NonNull Answer answer){
+    public void updateCommentCount(Answer answer){
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("commentCount", answer.getCommentCount());
-        database.update("answer", values, "aid = ?", new String[]{String.valueOf(answer.getCommentCount())});
+        database.update("answer", values, "aid = ?", new String[]{String.valueOf(answer.getAid())});
         database.close();
+    }
+
+    public void updateCollectCount(Answer answer){
+        SQLiteDatabase database = helper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("collectCount", answer.getCollectCount());
+        database.update("answer", values, "aid = ?", new String[]{String.valueOf(answer.getAid())});
+        database.close();
+    }
+
+    public List<Answer> getAllCollectAnswer(User user){
+        SQLiteDatabase database = helper.getWritableDatabase();
+        List<Answer> answers = new ArrayList<>();
+        Cursor cursor = database.query("user", new String[]{"collectAnswerId"}, "uid = ?", new String[]{String.valueOf(user.getUid())}, null, null, "uid desc");
+        if (cursor.moveToFirst()){
+            String [] ids = DataTransformUtil.convertToArray(cursor.getString(cursor.getColumnIndex("collectAnswerId")));
+            if (ids != null){
+                for (String id : ids){
+                    Cursor cursor1 = database.query("answer", new String[]{"answerText", "imageUrl", "videoUrl", "aid", "uid"}, "aid = ?", new String[]{id}, null, null, "aid desc");
+                    if (cursor1.moveToFirst()){
+                        Answer answer = new Answer();
+                        answer.setUid(cursor1.getInt(cursor1.getColumnIndex("uid")));
+                        answer.setAnswerText(cursor1.getString(cursor1.getColumnIndex("answerText")));
+                        answer.setImageUrl(cursor1.getString(cursor1.getColumnIndex("imageUrl")));
+                        answer.setVideoUrl(cursor1.getString(cursor1.getColumnIndex("videoUrl")));
+                        answers.add(answer);
+                    }
+                }
+            }
+        }
+        return answers;
+    }
+
+    public List<Answer> getAllApproveAnswer(User user){
+        SQLiteDatabase database = helper.getWritableDatabase();
+        List<Answer> answers = new ArrayList<>();
+        Cursor cursor = database.query("user", new String[]{"approveAnswerId"}, "uid = ?", new String[]{String.valueOf(user.getUid())}, null, null, "uid desc");
+        if (cursor.moveToFirst()){
+            String [] ids = DataTransformUtil.convertToArray(cursor.getString(cursor.getColumnIndex("approveAnswerId")));
+            if (ids != null){
+                for (String id : ids){
+                    Cursor cursor1 = database.query("answer", new String[]{"answerText", "imageUrl", "videoUrl", "aid", "uid"}, "aid = ?", new String[]{id}, null, null, "aid desc");
+                    if (cursor1.moveToFirst()){
+                        Answer answer = new Answer();
+                        answer.setUid(cursor1.getInt(cursor1.getColumnIndex("uid")));
+                        answer.setAnswerText(cursor1.getString(cursor1.getColumnIndex("answerText")));
+                        answer.setImageUrl(cursor1.getString(cursor1.getColumnIndex("imageUrl")));
+                        answer.setVideoUrl(cursor1.getString(cursor1.getColumnIndex("videoUrl")));
+                        answers.add(answer);
+                    }
+                }
+            }
+        }
+        return answers;
+    }
+
+    public List<Answer> getAllFollowingAnswer(User user){
+        SQLiteDatabase database = helper.getWritableDatabase();
+        List<Answer> answers = new ArrayList<>();
+        Cursor cursor = database.query("user", new String[]{"likeUid"}, "uid = ?", new String[]{String.valueOf(user.getUid())}, null, null, "uid desc");
+        if (cursor.moveToFirst()){
+            String [] ids = DataTransformUtil.convertToArray(cursor.getString(cursor.getColumnIndex("likeUid")));
+            if (ids != null){
+                for (String id : ids){
+                    Cursor cursor1 = database.query("answer", new String[]{"answerText", "imageUrl", "videoUrl", "aid", "uid"}, "uid = ?", new String[]{id}, null, null, "aid desc");
+                    if (cursor1.moveToFirst()){
+                        do {
+                            Answer answer = new Answer();
+                            answer.setUid(cursor1.getInt(cursor1.getColumnIndex("uid")));
+                            answer.setAnswerText(cursor1.getString(cursor1.getColumnIndex("answerText")));
+                            answer.setImageUrl(cursor1.getString(cursor1.getColumnIndex("imageUrl")));
+                            answer.setVideoUrl(cursor1.getString(cursor1.getColumnIndex("videoUrl")));
+                            answers.add(answer);
+                        }while (cursor1.moveToNext());
+                        cursor1.close();
+                    }
+                }
+            }
+        }
+        return answers;
     }
 }

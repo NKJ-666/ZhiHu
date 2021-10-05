@@ -21,6 +21,8 @@ public class Answer {
 
     private int commentCount;
 
+    private int collectCount;
+
     public int getAid() {
         return aid;
     }
@@ -99,5 +101,13 @@ public class Answer {
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+
+    public int getCollectCount() {
+        return collectCount;
+    }
+
+    public void setCollectCount(int collectCount) {
+        this.collectCount = collectCount;
     }
 }

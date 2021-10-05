@@ -45,9 +45,9 @@ public class QuestionAnswerItemFrag extends Fragment {
     }
 
     private void init(){
-        detailViewModel = new QuestionDetailViewModel(getContext(), helper, binding);
+        detailViewModel = new QuestionDetailViewModel(getContext(), helper, binding, this);
         QuestionAndAnswerAdapter adapter = new QuestionAndAnswerAdapter(getContext(),
-                detailViewModel.getAnswersFromQuestion(question), helper, user, question, binding);
+                detailViewModel.getAnswersFromQuestion(question), helper, user, question, binding, this);
         binding.questionAndAnswerRecycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.questionAndAnswerRecycler.setLayoutManager(manager);

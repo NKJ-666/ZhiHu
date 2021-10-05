@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.zhihu.bean.Question;
+import com.example.zhihu.bean.User;
 import com.example.zhihu.helper.MyDataBaseHelper;
 
 import java.util.ArrayList;
@@ -74,5 +75,32 @@ public class QuestionModel {
         values.put("aid", question.getAid());
         database.update("question", values, "qid = ?", new String[]{String.valueOf(question.getQid())});
         database.close();
+    }
+
+    public List<Question> getAllUserQuestion(User user){
+        SQLiteDatabase database = helper.getWritableDatabase();
+        List<Question> questions = new ArrayList<>();
+        Cursor cursor = database.query("question", new String[]{"questionText", "qid", "uid"}, "uid = ?", new String[]{String.valueOf(user.getUid())}, null, null, "qid desc");
+        if (cursor.moveToFirst()){
+            do {
+                Question question = new Question();
+                question.setUid(cursor.getInt(cursor.getColumnIndex("uid")));
+                question.setQuestionText(cursor.getString(cursor.getColumnIndex("questionText")));
+                questions.add(question);
+            }while (cursor.moveToNext());
+        }
+        return questions;
+    }
+
+    public List<String> getAllQuestionText(){
+        SQLiteDatabase database = helper.getWritableDatabase();
+        List<String> questionTexts = new ArrayList<>();
+        Cursor cursor = database.query("question", new String[]{"questionText"}, null, null, null, null, null);
+        if (cursor.moveToFirst()){
+            do {
+                questionTexts.add(cursor.getString(cursor.getColumnIndex("questionText")));
+            }while (cursor.moveToNext());
+        }
+        return questionTexts;
     }
 }

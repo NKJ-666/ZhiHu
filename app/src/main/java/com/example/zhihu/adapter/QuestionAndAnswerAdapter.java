@@ -1,5 +1,6 @@
 package com.example.zhihu.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,13 +41,13 @@ public class QuestionAndAnswerAdapter extends RecyclerView.Adapter<QuestionAndAn
     private Question question;
     private MyDataBaseHelper helper;
 
-    public QuestionAndAnswerAdapter(Context context, List<Answer> answers, MyDataBaseHelper helper, User user, Question question, QuestionAndAnswerFragementBinding binding){
+    public QuestionAndAnswerAdapter(Context context, List<Answer> answers, MyDataBaseHelper helper, User user, Question question, QuestionAndAnswerFragementBinding binding, Fragment fragment){
         this.answers = answers;
         this.context = context;
         this.user = user;
         this.question = question;
         this.helper = helper;
-        viewModel = new QuestionDetailViewModel(context, helper, binding);
+        viewModel = new QuestionDetailViewModel(context, helper, binding, fragment);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
@@ -80,12 +82,6 @@ public class QuestionAndAnswerAdapter extends RecyclerView.Adapter<QuestionAndAn
         itemBinding.questionCommentDetailRecycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         itemBinding.questionCommentDetailRecycler.setLayoutManager(manager);
-        itemBinding.followTextBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
     }
 
     @Override
@@ -154,6 +150,9 @@ public class QuestionAndAnswerAdapter extends RecyclerView.Adapter<QuestionAndAn
                     Comment comment = new Comment();
                     comment.setUid(user.getUid());
                     comment.setAid(answer.getAid());
+                    answer.setCommentCount(answer.getCommentCount() + 1);
+                    viewModel.updateCommentCount(answer);
+                    binding.commentCount.setText(String.valueOf(Integer.parseInt(binding.commentCount.getText().toString()) + 1));
                     comment.setCommentText(commentText);
                     viewModel.insertComment(comment);
                     answer.setCid(viewModel.getAllCommentIdFromAnswer(answer));

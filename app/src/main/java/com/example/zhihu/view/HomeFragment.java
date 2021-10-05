@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -81,6 +82,23 @@ public class HomeFragment extends Fragment {
                         .commit();
             }
         });
+        binding.searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
     @Override
@@ -90,13 +108,16 @@ public class HomeFragment extends Fragment {
         shareData.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();
                 mUser = user;
-                adapter = new HomeItemAdapter(getContext(), questions, helper, fragment, user);
-                binding.questionRecycler.setAdapter(adapter);
-                binding.addQuestionBtn.setEnabled(true);
-                if (user.getImageUrl() != null){
-                    Glide.with(binding.homeHeadImage.getContext()).load(new File(user.getImageUrl())).into(binding.homeHeadImage);
+                if (user != null){
+                    adapter = new HomeItemAdapter(getContext(), questions, helper, fragment, user);
+                    binding.questionRecycler.setAdapter(adapter);
+                    binding.addQuestionBtn.setEnabled(true);
+                    if (user.getImageUrl() != null){
+                        Glide.with(binding.homeHeadImage.getContext()).load(new File(user.getImageUrl())).into(binding.homeHeadImage);
+                    }
+                }else {
+                    binding.homeHeadImage.setImageResource(R.drawable.test_backgroud);
                 }
             }
         });

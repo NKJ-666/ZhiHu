@@ -16,8 +16,10 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
             + "username text not null default 'username', "
             + "followingCount integer not null default 0, "
             + "followerCount integer not null default 0, "
+            + "approveAnswerId text, "
             + "imageUrl text not null default '/storage/emulated/0/$MuMu共享文件夹/1603088008624.jpg', "
             + "sex integer not null default 0, "
+            + "collectAnswerId text, "
             + "backfroundUrl text, "
             + "qid text, "
             + "likeUid text, "
@@ -40,6 +42,7 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
             + "imageUrl text, "
             + "videoUrl text, "
             + "type integer not null, "
+            + "collectCount integer not null default 0, "
             + "cid text, "
             + "praisedCount integer not null default 0, "
             + "collectedCount integer not null default 0, "
@@ -71,5 +74,11 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists user");
         db.execSQL(CREATE_USER);
+        db.execSQL("drop table if exists comment");
+        db.execSQL("drop table if exists answer");
+        db.execSQL("drop table if exists question");
+        db.execSQL(CREATE_COMMENT);
+        db.execSQL(CREATE_ANSWER);
+        db.execSQL(CREATE_QUESTION);
     }
 }

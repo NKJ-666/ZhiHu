@@ -34,18 +34,20 @@ public class UserSettingDialog extends DialogFragment {
     private User user;
     private UserSettingDialogBinding binding;
     private ProfileViewModel viewModel;
+    private MyDataBaseHelper helper;
     private static final int UPDATE_INFO = 1;
     private static final int GET_BACK_IMAGE = 2;
 
     public UserSettingDialog(User user, MyDataBaseHelper helper){
         this.user = user;
-        viewModel = new ProfileViewModel(helper);
+        this.helper = helper;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.user_setting_dialog, container, false);
+        viewModel = new ProfileViewModel(helper, getContext());
         init();
         return binding.getRoot();
     }
@@ -77,9 +79,7 @@ public class UserSettingDialog extends DialogFragment {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         binding.settingUsername.setText(user.getUsername());
-        if (user.getImageUrl() == null){
-            Glide.with(binding.dialogHeadImage.getContext()).load(R.drawable.test_backgroud).into(binding.dialogHeadImage);
-        }
+        Glide.with(binding.dialogHeadImage.getContext()).load(user.getImageUrl()).into(binding.dialogHeadImage);
         binding.sexSpinner.setSelection(user.getSex());
         binding.sexSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

@@ -17,6 +17,8 @@ public class User {
 
     private String imageUrl;
 
+    private String approveAnswerId;
+
     private int followingCount;
 
     private int followerCount;
@@ -30,6 +32,8 @@ public class User {
     private int praisedCount;
 
     private String backgroundUrl;
+
+    private String collectAnswerId;
 
     public int getUid() {
         return uid;
@@ -130,5 +134,21 @@ public class User {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public String getApproveAnswerId() {
+        return approveAnswerId;
+    }
+
+    public void setApproveAnswerId(String approveAnswerId) {
+        this.approveAnswerId = approveAnswerId;
+    }
+
+    public String getCollectAnswerId() {
+        return collectAnswerId;
+    }
+
+    public void setCollectAnswerId(String collectAnswerId) {
+        this.collectAnswerId = collectAnswerId;
     }
 }

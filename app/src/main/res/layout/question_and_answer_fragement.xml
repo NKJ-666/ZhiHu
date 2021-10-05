@@ -35,6 +35,11 @@
                         android:layout_height="wrap_content"
                         android:text="@{Question.questionText}"/>
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Question.questionDetail}"/>
+
                     <LinearLayout
                         android:id="@+id/add_image_linear"
                         android:orientation="vertical"

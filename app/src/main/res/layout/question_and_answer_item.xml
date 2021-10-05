@@ -50,9 +50,10 @@
             android:id="@+id/follow_text_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="20sp"
             android:text="+关注"
             android:textColor="#3F51B5"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:layout_alignParentEnd="true"/>
         
         <LinearLayout
