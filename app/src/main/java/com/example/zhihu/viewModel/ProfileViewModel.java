@@ -46,6 +46,7 @@ public class ProfileViewModel {
                         }
                     });
                     dialog = builder.create();
+                    dialog.setCancelable(false);
                     if (dialog != null){
                         dialog.show();
                     }

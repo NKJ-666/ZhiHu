@@ -42,11 +42,13 @@ public class HomeFragment extends Fragment {
     private ProfileShareData shareData;
     private User mUser;
     private HomeFragment fragment;
+    private List<Question> questionTexts;
 
     public HomeFragment(MyDataBaseHelper helper){
         this.helper = helper;
         questionModel = new QuestionModel(helper);
         initQuestions();
+        questionTexts = questionModel.getAllQuestionText();
     }
 
     @Override
@@ -67,10 +69,10 @@ public class HomeFragment extends Fragment {
     private void init(){
         shareData = new ViewModelProvider(requireActivity()).get(ProfileShareData.class);
         SQLiteStudioService.instance().start(getContext());
-        adapter = new HomeItemAdapter(getContext(), questions, helper, fragment, mUser);
-        binding.questionRecycler.setAdapter(adapter);
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        binding.questionRecycler.setLayoutManager(manager);
+        getChildFragmentManager()
+                .beginTransaction()
+                .replace(R.id.home_recycler_fragment, new HomeQuestionFrag(getContext(), questions, helper, mUser, fragment))
+                .commit();
         if (mUser == null){
             binding.addQuestionBtn.setEnabled(false);
         }
@@ -85,18 +87,10 @@ public class HomeFragment extends Fragment {
         binding.searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.home_recycler_fragment, new SearchListFragment(helper, questionTexts, mUser, binding))
+                        .commit();
             }
         });
     }
@@ -104,14 +98,11 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        adapter.notifyDataSetChanged();
         shareData.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {
                 mUser = user;
                 if (user != null){
-                    adapter = new HomeItemAdapter(getContext(), questions, helper, fragment, user);
-                    binding.questionRecycler.setAdapter(adapter);
                     binding.addQuestionBtn.setEnabled(true);
                     if (user.getImageUrl() != null){
                         Glide.with(binding.homeHeadImage.getContext()).load(new File(user.getImageUrl())).into(binding.homeHeadImage);

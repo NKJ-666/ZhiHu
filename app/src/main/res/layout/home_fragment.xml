@@ -37,10 +37,8 @@
 
         </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/question_recycler"
-            android:layout_marginStart="10sp"
-            android:layout_marginEnd="10sp"
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/home_recycler_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

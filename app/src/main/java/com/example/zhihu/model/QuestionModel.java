@@ -92,13 +92,16 @@ public class QuestionModel {
         return questions;
     }
 
-    public List<String> getAllQuestionText(){
+    public List<Question> getAllQuestionText(){
         SQLiteDatabase database = helper.getWritableDatabase();
-        List<String> questionTexts = new ArrayList<>();
-        Cursor cursor = database.query("question", new String[]{"questionText"}, null, null, null, null, null);
+        List<Question> questionTexts = new ArrayList<>();
+        Cursor cursor = database.query("question", new String[]{"questionText", "qid"}, null, null, null, null, null);
         if (cursor.moveToFirst()){
             do {
-                questionTexts.add(cursor.getString(cursor.getColumnIndex("questionText")));
+                Question question = new Question();
+                question.setQid(cursor.getInt(cursor.getColumnIndex("qid")));
+                question.setQuestionText(cursor.getString(cursor.getColumnIndex("questionText")));
+                questionTexts.add(question);
             }while (cursor.moveToNext());
         }
         return questionTexts;

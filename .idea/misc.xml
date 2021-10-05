@@ -15,7 +15,8 @@
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/add_question_fragment.xml" value="0.25" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/answer_item.xml" value="0.24728260869565216" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/comment_item.xml" value="0.1" />
-        <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/home_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/home_fragment.xml" value="0.1" />
+        <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/home_recycler_fragment.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/login_dialog.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/login_dialog_fragment.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/login_fragement.xml" value="0.25364583333333335" />
@@ -37,6 +38,8 @@
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/question_no_answer.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/register_dialog_fragment.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/search_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/search_list_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/search_question_item.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/user_setting_dialog.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/layout/write_answer_fragment.xml" value="0.25364583333333335" />
         <entry key="..\:/AndroidProject/ZhiHu/app/src/main/res/menu/navigation_menu.xml" value="0.25364583333333335" />
