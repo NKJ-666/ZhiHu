@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.zhihu.R;
@@ -64,12 +65,12 @@ public class HomeQuestionFrag extends Fragment {
         binding.questionRecycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.questionRecycler.setLayoutManager(manager);
+        binding.questionRecycler.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         shareData = new ViewModelProvider(requireActivity()).get(ProfileShareData.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        adapter.notifyDataSetChanged();
         shareData.getUser().observe(getViewLifecycleOwner(), new Observer<User>() {
             @Override
             public void onChanged(User user) {

@@ -8,7 +8,7 @@ public class InfoShareData extends ViewModel {
 
     private MutableLiveData<Integer> followerCount = new MutableLiveData<>();
 
-    private MutableLiveData<Integer> approveCount = new MutableLiveData();
+    private MutableLiveData<Integer> approveCount = new MutableLiveData<>();
 
 
     public MutableLiveData<Integer> getApproveCount() {
@@ -24,7 +24,7 @@ public class InfoShareData extends ViewModel {
     }
 
     public void setFollowingCount(Integer followingCount){
-        this.followerCount.setValue(followingCount);
+        this.followingCount.setValue(followingCount);
     }
 
     public void setFollowerCount(Integer followerCount){

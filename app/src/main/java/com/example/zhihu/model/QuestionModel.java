@@ -106,4 +106,10 @@ public class QuestionModel {
         }
         return questionTexts;
     }
+
+    public void deleteQuestion(Question question){
+        SQLiteDatabase database = helper.getWritableDatabase();
+        database.delete("question", "qid = ?", new String[]{String.valueOf(question.getQid())});
+        database.close();
+    }
 }

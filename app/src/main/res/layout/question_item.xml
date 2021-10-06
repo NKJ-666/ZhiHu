@@ -13,6 +13,9 @@
     </data>
 
     <LinearLayout
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="10sp"
         android:id="@+id/total_layout"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -26,6 +29,8 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:background="#ffffff"
+                android:layout_marginTop="10sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -41,6 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:textColor="@color/black"
                     android:layout_marginStart="10sp"
                     android:layout_toEndOf="@id/question_circle_image"
                     android:text="@{Question.questionText}"

@@ -16,14 +16,14 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/home_head_image"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:src="@drawable/test_backgroud"
                 android:layout_weight="1"/>
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search_view"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:layout_weight="5"
                 android:background="@drawable/search_backgroud"
                 app:queryHint="请输入搜索内容"/>
@@ -31,7 +31,7 @@
             <ImageView
                 android:id="@+id/add_question_btn"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="50dp"
                 android:layout_weight="1"
                 android:src="@drawable/add_question"/>
 

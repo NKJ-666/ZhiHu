@@ -53,6 +53,7 @@ public class AnswerModel {
         answer.setQid(cursor.getInt(cursor.getColumnIndex("qid")));
         answer.setUid(cursor.getInt(cursor.getColumnIndex("uid")));
         answer.setType(cursor.getInt(cursor.getColumnIndex("type")));
+        answer.setCollectCount(cursor.getInt(cursor.getColumnIndex("collectedCount")));
         database.close();
         return answer;
     }
@@ -117,7 +118,7 @@ public class AnswerModel {
     public void updateCollectCount(Answer answer){
         SQLiteDatabase database = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put("collectCount", answer.getCollectCount());
+        values.put("collectedCount", answer.getCollectCount());
         database.update("answer", values, "aid = ?", new String[]{String.valueOf(answer.getAid())});
         database.close();
     }

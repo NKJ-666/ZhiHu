@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -87,12 +88,14 @@ public class ProfileFragment extends Fragment {
         Glide.with(binding.backgroudImage.getContext()).load(R.drawable.test_backgroud).into(binding.backgroudImage);
         FragmentAdapter adapter = new FragmentAdapter(requireActivity(), fragments);
         binding.myPostViewPaper.setAdapter(adapter);
+        binding.myPostViewPaper.registerOnPageChangeCallback(callback);
         binding.myPostViewPaper.setOffscreenPageLimit(ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT);
         mediator = new TabLayoutMediator(binding.profileTab, binding.myPostViewPaper, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 TextView tabView = new TextView(getContext());
                 tabView.setText(tabs[position]);
+                tabView.setTextSize(18);
                 tab.setCustomView(tabView);
             }
         });
@@ -121,6 +124,7 @@ public class ProfileFragment extends Fragment {
                     }
                 }else {
                     initList(null);
+                    Glide.with(binding.backgroudImage.getContext()).load(R.drawable.test_backgroud).into(binding.backgroudImage);
                     FragmentAdapter adapter = new FragmentAdapter(requireActivity(), fragments);
                     binding.myPostViewPaper.setAdapter(adapter);
                     getParentFragmentManager().beginTransaction()
@@ -171,4 +175,21 @@ public class ProfileFragment extends Fragment {
         fragments.add(new MyCollectAnswerFrag(helper, mUser));
         fragments.add(new MyApproveAnswerFrag(helper, mUser));
     }
+
+    private ViewPager2.OnPageChangeCallback callback = new ViewPager2.OnPageChangeCallback() {
+        @Override
+        public void onPageSelected(int position) {
+            for (int flag = 0; flag < 4; flag ++){
+                TabLayout.Tab tab = binding.profileTab.getTabAt(flag);
+                TextView tabView = (TextView) tab.getCustomView();
+                if (tab.getPosition() == position){
+                    tabView.setTextSize(20);
+                    tabView.setTextColor(Color.parseColor("#0091EA"));
+                }else {
+                    tabView.setTextSize(18);
+                    tabView.setTextColor(Color.BLACK);
+                }
+            }
+        }
+    };
 }

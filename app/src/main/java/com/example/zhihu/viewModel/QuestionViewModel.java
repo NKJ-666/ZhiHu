@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.zhihu.adapter.QuestionItemAdapter;
@@ -29,6 +30,7 @@ public class QuestionViewModel {
         binding.myQuestionRecycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.myQuestionRecycler.setLayoutManager(manager);
+        binding.myQuestionRecycler.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -47,6 +49,7 @@ public class QuestionViewModel {
         binding.myFollowingRecyclerQuestion.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.myFollowingRecyclerQuestion.setLayoutManager(manager);
+        binding.myFollowingRecyclerQuestion.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

@@ -70,7 +70,11 @@ public class QuestionAndAnswerAdapter extends RecyclerView.Adapter<QuestionAndAn
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Answer answer = answers.get(position);
         QuestionAndAnswerItemBinding itemBinding = holder.binding;
-        itemBinding.setOwnUser(user);
+        if (user != null)
+           Glide.with(itemBinding.commentCircleImage.getContext()).load(new File(user.getImageUrl())).into(itemBinding.commentCircleImage);
+        else {
+            Glide.with(itemBinding.commentCircleImage.getContext()).load(R.drawable.test_backgroud).into(itemBinding.commentCircleImage);
+        }
         itemBinding.setQuestion(question);
         itemBinding.setAnswer(answer);
         itemBinding.setAnswerUser(viewModel.getUserFromAnswer(answer));
@@ -139,29 +143,30 @@ public class QuestionAndAnswerAdapter extends RecyclerView.Adapter<QuestionAndAn
                     Toast.makeText(context, "需要先登录才能评论", Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-        binding.sendCommentBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String commentText = binding.commentEditText.getText().toString();
-                if (commentText.isEmpty()){
-                    Toast.makeText(context, "评论不能为空", Toast.LENGTH_SHORT).show();
-                }else {
-                    Comment comment = new Comment();
-                    comment.setUid(user.getUid());
-                    comment.setAid(answer.getAid());
-                    answer.setCommentCount(answer.getCommentCount() + 1);
-                    viewModel.updateCommentCount(answer);
-                    binding.commentCount.setText(String.valueOf(Integer.parseInt(binding.commentCount.getText().toString()) + 1));
-                    comment.setCommentText(commentText);
-                    viewModel.insertComment(comment);
-                    answer.setCid(viewModel.getAllCommentIdFromAnswer(answer));
-                    viewModel.updateAnswerCid(answer);
-                    CommentItemAdapter adapter = new CommentItemAdapter(context, helper, viewModel.getCommentsFromAnswer(answer));
-                    binding.questionCommentDetailRecycler.setAdapter(adapter);
-                    binding.commentEditText.setText("");
+        }else {
+            binding.sendCommentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String commentText = binding.commentEditText.getText().toString();
+                    if (commentText.isEmpty()){
+                        Toast.makeText(context, "评论不能为空", Toast.LENGTH_SHORT).show();
+                    }else {
+                        Comment comment = new Comment();
+                        comment.setUid(user.getUid());
+                        comment.setAid(answer.getAid());
+                        answer.setCommentCount(answer.getCommentCount() + 1);
+                        viewModel.updateCommentCount(answer);
+                        binding.commentCount.setText(String.valueOf(Integer.parseInt(binding.commentCount.getText().toString()) + 1));
+                        comment.setCommentText(commentText);
+                        viewModel.insertComment(comment);
+                        answer.setCid(viewModel.getAllCommentIdFromAnswer(answer));
+                        viewModel.updateAnswerCid(answer);
+                        CommentItemAdapter adapter = new CommentItemAdapter(context, helper, viewModel.getCommentsFromAnswer(answer));
+                        binding.questionCommentDetailRecycler.setAdapter(adapter);
+                        binding.commentEditText.setText("");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

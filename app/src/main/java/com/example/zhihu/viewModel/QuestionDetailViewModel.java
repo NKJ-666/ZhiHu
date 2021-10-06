@@ -156,7 +156,7 @@ public class QuestionDetailViewModel {
                 mUser.setPraisedCount(mUser.getPraisedCount() + 1);
                 userModel.updateApproved(mUser);
                 binding.approveBtn.setEnabled(false);
-                shareData.setApproveCount(getUserFromAnswer(answer).getPraisedCount());
+                shareData.setApproveCount(user.getPraisedCount());
             }
         });
         if (user != null){
@@ -171,9 +171,10 @@ public class QuestionDetailViewModel {
             }
             String [] uids = DataTransformUtil.convertToArray(user.getLikeUid());
             if (uids != null && uids.length > 0){
-                for (String id : ids){
+                for (String id : uids){
                     if (Integer.parseInt(id) == getUserFromAnswer(answer).getUid()){
                         binding.followTextBtn.setEnabled(false);
+                        break;
                     }
                 }
             }
@@ -189,6 +190,7 @@ public class QuestionDetailViewModel {
                     if (builder.charAt(0) == ','){
                         builder.deleteCharAt(0);
                     }
+                    binding.collectAnswer.setImageResource(R.drawable.collect_selected);
                     user.setCollectAnswerId(builder.toString());
                     userModel.updateCollectAnswer(user);
                     binding.collectAnswer.setEnabled(false);
@@ -223,7 +225,7 @@ public class QuestionDetailViewModel {
                 binding.followTextBtn.setEnabled(false);
                 shareData.setFollowingCount(user.getFollowingCount());
                 if (user.getUid() == user1.getUid()){
-                    shareData.setFollowerCount(user1.getFollowerCount());
+                    shareData.setFollowerCount(user.getFollowerCount());
                 }
             }
         });

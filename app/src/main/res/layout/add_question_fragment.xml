@@ -57,6 +57,7 @@
             android:layout_height="wrap_content"
             android:text="添加视频"
             android:background="@drawable/login_btn_backgroud"
+            android:layout_marginEnd="10sp"
             android:layout_alignParentEnd="true"
             android:layout_below="@id/question_text_edit"/>
 
@@ -65,6 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/add_image_btn"
+            android:layout_marginEnd="10sp"
             android:layout_marginStart="10sp">
 
             <LinearLayout

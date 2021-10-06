@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.zhihu.R;
 import com.example.zhihu.adapter.QuestionAndAnswerAdapter;
@@ -51,6 +52,7 @@ public class QuestionAnswerItemFrag extends Fragment {
         binding.questionAndAnswerRecycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         binding.questionAndAnswerRecycler.setLayoutManager(manager);
+        binding.questionAndAnswerRecycler.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         detailViewModel.init(question);
     }
 }

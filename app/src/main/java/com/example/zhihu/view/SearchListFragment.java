@@ -62,19 +62,28 @@ public class SearchListFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                List<Question> questions = new ArrayList<>();
-                if (questionText.size() > 0){
-                    for (Question question : questionText){
-                        if (question.getQuestionText().contains(newText)){
-                            questions.add(question);
+                if (newText != null && !newText.isEmpty()){
+                    List<Question> questions = new ArrayList<>();
+                    if (questionText.size() > 0){
+                        for (Question question : questionText){
+                            if (question.getQuestionText().contains(newText)){
+                                questions.add(question);
+                            }
                         }
                     }
+                    SearchAdapter adapter = new SearchAdapter(getContext(), questions, fragment,  helper, user);
+                    binding.searchList.setAdapter(adapter);
+                    LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                    binding.searchList.setLayoutManager(manager);
+                    return true;
+                }else {
+                    List<Question> questions = new ArrayList<>();
+                    SearchAdapter adapter = new SearchAdapter(getContext(), questions, fragment,  helper, user);
+                    binding.searchList.setAdapter(adapter);
+                    LinearLayoutManager manager = new LinearLayoutManager(getContext());
+                    binding.searchList.setLayoutManager(manager);
+                    return true;
                 }
-                SearchAdapter adapter = new SearchAdapter(getContext(), questions, fragment,  helper, user);
-                binding.searchList.setAdapter(adapter);
-                LinearLayoutManager manager = new LinearLayoutManager(getContext());
-                binding.searchList.setLayoutManager(manager);
-                return true;
             }
         });
         homeFragmentBinding.searchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -82,7 +91,7 @@ public class SearchListFragment extends Fragment {
             public boolean onClose() {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.home_main_fragment, new HomeFragment(helper))
+                        .replace(R.id.home_main_fragment, new NavigationFragment(helper))
                         .commit();
                 return true;
             }

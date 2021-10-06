@@ -72,13 +72,6 @@ public class MyDataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists user");
-        db.execSQL(CREATE_USER);
-        db.execSQL("drop table if exists comment");
-        db.execSQL("drop table if exists answer");
-        db.execSQL("drop table if exists question");
-        db.execSQL(CREATE_COMMENT);
-        db.execSQL(CREATE_ANSWER);
-        db.execSQL(CREATE_QUESTION);
+
     }
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.zhihu.adapter.AnswerItemAdapter;
@@ -30,6 +31,7 @@ public class AnswerViewModel {
         binding.myCollectAnswer.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.myCollectAnswer.setLayoutManager(manager);
+        binding.myCollectAnswer.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -48,6 +50,7 @@ public class AnswerViewModel {
         binding.myApproveAnswerRecycler.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.myApproveAnswerRecycler.setLayoutManager(manager);
+        binding.myApproveAnswerRecycler.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -66,6 +69,7 @@ public class AnswerViewModel {
         binding.myFollowingRecyclerAnswer.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(context);
         binding.myFollowingRecyclerAnswer.setLayoutManager(manager);
+        binding.myFollowingRecyclerAnswer.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         binding.swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
