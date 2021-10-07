@@ -1,5 +1,6 @@
 package com.example.zhihu.viewModel;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
@@ -33,14 +34,14 @@ import java.io.File;
 import java.util.List;
 
 public class QuestionDetailViewModel {
-    private AnswerModel answerModel;
-    private CommentModel commentModel;
-    private UserModel userModel;
+    private final AnswerModel answerModel;
+    private final CommentModel commentModel;
+    private final UserModel userModel;
     private QuestionModel questionModel;
     private MyDataBaseHelper helper;
-    private Context context;
-    private QuestionAndAnswerFragementBinding binding;
-    private InfoShareData shareData;
+    private final Context context;
+    private final QuestionAndAnswerFragementBinding binding;
+    private final InfoShareData shareData;
 
     public QuestionDetailViewModel(Context context, MyDataBaseHelper helper, QuestionAndAnswerFragementBinding binding, Fragment fragment){
         this.context = context;
@@ -139,6 +140,7 @@ public class QuestionDetailViewModel {
         }
         binding.approveBtn.setText(praisedCount + "赞成");
         binding.approveBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
                 User mUser = getUserFromAnswer(answer);
@@ -151,12 +153,14 @@ public class QuestionDetailViewModel {
                 if (builder.charAt(0) == ','){
                     builder.deleteCharAt(0);
                 }
+                assert user != null;
                 user.setApproveAnswerId(builder.toString());
                 updateUserApproveId(user);
                 mUser.setPraisedCount(mUser.getPraisedCount() + 1);
                 userModel.updateApproved(mUser);
                 binding.approveBtn.setEnabled(false);
-                shareData.setApproveCount(user.getPraisedCount());
+                if (user.getUid() == mUser.getUid())
+                    shareData.setApproveCount(mUser.getPraisedCount());
             }
         });
         if (user != null){

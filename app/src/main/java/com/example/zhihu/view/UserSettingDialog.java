@@ -2,8 +2,6 @@ package com.example.zhihu.view;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -28,13 +26,14 @@ import com.example.zhihu.util.GetRealUriUtil;
 import com.example.zhihu.viewModel.ProfileViewModel;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 public class UserSettingDialog extends DialogFragment {
     private User user;
     private UserSettingDialogBinding binding;
     private ProfileViewModel viewModel;
     private MyDataBaseHelper helper;
+    private String imageUrl;
+    private int sex = 3;
     private static final int UPDATE_INFO = 1;
     private static final int GET_BACK_IMAGE = 2;
 
@@ -55,15 +54,10 @@ public class UserSettingDialog extends DialogFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (resultCode == Activity.RESULT_OK){
-            switch (requestCode){
-                case GET_BACK_IMAGE:{
-                    String path = GetRealUriUtil.getImageRealPath(getContext(), data.getData());
-                    Glide.with(binding.dialogHeadImage.getContext()).load(new File(path)).into(binding.dialogHeadImage);
-                    user.setImageUrl(path);
-                    break;
-                }
-                default:
-                    break;
+            if (requestCode == GET_BACK_IMAGE) {
+                String path = GetRealUriUtil.getImageRealPath(getContext(), data.getData());
+                Glide.with(binding.dialogHeadImage.getContext()).load(new File(path)).into(binding.dialogHeadImage);
+                imageUrl = path;
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -84,7 +78,7 @@ public class UserSettingDialog extends DialogFragment {
         binding.sexSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                user.setSex(position);
+                sex = position;
             }
 
             @Override
@@ -92,30 +86,22 @@ public class UserSettingDialog extends DialogFragment {
 
             }
         });
-        binding.dialogHeadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chooseFromAlbum();
+        binding.dialogHeadImage.setOnClickListener(v -> chooseFromAlbum());
+        binding.cancelBtn.setOnClickListener(v -> dismiss());
+        binding.saveBtn.setOnClickListener(v -> {
+            if (imageUrl != null)
+                user.setImageUrl(imageUrl);
+            if (sex != 3){
+                user.setSex(sex);
             }
-        });
-        binding.cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        binding.saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user.setUsername(binding.settingUsername.getText().toString());
-                viewModel.updateUser(user);
-                Intent intent = new Intent();
-                intent.putExtra("imageUrl", user.getImageUrl());
-                intent.putExtra("username", user.getUsername());
-                intent.putExtra("sex", user.getSex());
-                getTargetFragment().onActivityResult(UPDATE_INFO, Activity.RESULT_OK, intent);
-                dismiss();
-            }
+            user.setUsername(binding.settingUsername.getText().toString());
+            viewModel.updateUser(user);
+            Intent intent = new Intent();
+            intent.putExtra("imageUrl", user.getImageUrl());
+            intent.putExtra("username", user.getUsername());
+            intent.putExtra("sex", user.getSex());
+            getTargetFragment().onActivityResult(UPDATE_INFO, Activity.RESULT_OK, intent);
+            dismiss();
         });
     }
 }

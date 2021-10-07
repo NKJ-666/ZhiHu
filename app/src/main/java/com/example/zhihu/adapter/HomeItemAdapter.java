@@ -1,15 +1,11 @@
 package com.example.zhihu.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -32,13 +28,13 @@ import com.example.zhihu.view.QuestionAndAnswerFrag;
 import java.util.List;
 
 public class HomeItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private List<Question> questions;
-    private Context context;
-    private MyDataBaseHelper helper;
+    private final List<Question> questions;
+    private final Context context;
+    private final MyDataBaseHelper helper;
     private QuestionModel questionModel;
-    private AnswerModel answerModel;
-    private UserModel userModel;
-    private HomeFragment fragment;
+    private final AnswerModel answerModel;
+    private final UserModel userModel;
+    private final HomeFragment fragment;
     private User user;
     private static final int TYPE_TEXT = 0;
     private static final int TYPE_IMAGE = 1;
@@ -143,14 +139,9 @@ public class HomeItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holderText.textBinding.setAnswer(answer);
             }
             holderText.textBinding.setQuestion(question);
-            holderText.textBinding.totalLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.requireActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
-                            .commit();
-                }
-            });
+            holderText.textBinding.totalLayout.setOnClickListener(v -> fragment.requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
+                    .commit());
         }else if(holder instanceof ViewHolderImage){
             ViewHolderImage holderImage = (ViewHolderImage) holder;
             User mUser = userModel.queryUserFromId(question.getUid());
@@ -163,14 +154,9 @@ public class HomeItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Glide.with(holderImage.imageBinding.answerImage.getContext()).load(DataTransformUtil.convertToArray(answer.getImageUrl())[0]).into(holderImage.imageBinding.answerImage);
             }
             holderImage.imageBinding.setQuestion(question);
-            holderImage.imageBinding.totalLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.requireActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
-                            .commit();
-                }
-            });
+            holderImage.imageBinding.totalLayout.setOnClickListener(v -> fragment.requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
+                    .commit());
         }else if (holder instanceof ViewHolderVideo){
             ViewHolderVideo holderVideo = (ViewHolderVideo) holder;
             User mUser = userModel.queryUserFromId(question.getUid());
@@ -184,25 +170,15 @@ public class HomeItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 holderVideo.videoBinding.video.seekTo(100);
             }
             holderVideo.videoBinding.setQuestion(question);
-            holderVideo.videoBinding.totalLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.requireActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
-                            .commit();
-                }
-            });
+            holderVideo.videoBinding.totalLayout.setOnClickListener(v -> fragment.requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
+                    .commit());
         }else {
             ViewHolderNoAnswer holderNoAnswer = (ViewHolderNoAnswer) holder;
             holderNoAnswer.binding.setQuestion(question);
-            holderNoAnswer.binding.totalLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    fragment.requireActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
-                            .commit();
-                }
-            });
+            holderNoAnswer.binding.totalLayout.setOnClickListener(v -> fragment.requireActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.home_main_fragment, new QuestionAndAnswerFrag(helper, question, user))
+                    .commit());
         }
     }
 

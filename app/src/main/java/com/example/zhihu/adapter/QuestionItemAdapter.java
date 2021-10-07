@@ -26,13 +26,10 @@ public class QuestionItemAdapter extends RecyclerView.Adapter<QuestionItemAdapte
 
     private QuestionItemViewModel viewModel;
 
-    private QuestionItemAdapter adapter;
-
     public QuestionItemAdapter(Context context, MyDataBaseHelper helper, List<Question> questions){
         this.context = context;
         this.helper = helper;
         this.questions = questions;
-        this.adapter = this;
         viewModel = new QuestionItemViewModel(helper);
     }
 
